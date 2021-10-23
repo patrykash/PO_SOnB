@@ -1,4 +1,4 @@
-package model;
+package com.example.sonb.model;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,7 +8,7 @@ import java.util.List;
 public class MainServer {
 
     private ServerSocket serverSocket;
-    private int connectedClients;
+    private int connectedClients = 0;
     public List<ClientHandler> clients = new ArrayList<>(7);
 
 
@@ -18,6 +18,7 @@ public class MainServer {
             while (connectedClients < 7) {
                 clients.add(new ClientHandler(serverSocket.accept()));
                 clients.get(connectedClients).start();
+                connectedClients++;
             }
         } catch (IOException e) {
             e.printStackTrace();
