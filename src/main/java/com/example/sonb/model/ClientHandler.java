@@ -35,5 +35,13 @@ public class ClientHandler extends Thread {
         out.println("Wiadomosc z serwera dla klienta : " + clientId);
     }
 
+    public void close() {
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

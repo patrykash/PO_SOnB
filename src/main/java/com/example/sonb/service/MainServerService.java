@@ -23,4 +23,8 @@ public class MainServerService {
     public void readMessage(int clientId) {
         mainServer.clients.get(clientId).read();
     }
+
+    public void stopClientSocket(int clientId) {
+        mainServer.clients.get(clientId).close();
+    }
 }
