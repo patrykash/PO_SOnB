@@ -1,6 +1,7 @@
 package com.example.sonb.service;
 
 import com.example.sonb.model.Client;
+import com.example.sonb.model.ServerPort;
 import com.example.sonb.model.SimpleServer;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class ClientService {
     public void startClient() {
 
         for (int i = 0; i < 7; i++) {
-            clientList.add(new SimpleServer());
+            clientList.add(new SimpleServer(ServerPort.values()[i+1].getPortNumber()));
             clientList.get(i).createClient();
             try {
                 clientList.get(i).getClient().startConnection("127.0.0.1", 6666);
