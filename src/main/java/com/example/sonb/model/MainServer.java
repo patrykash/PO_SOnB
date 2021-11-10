@@ -9,10 +9,14 @@ public class MainServer {
 
     private ServerSocket serverSocket;
     private int connectedClients = 0;
+    private int port;
     public List<ClientHandler> clients = new ArrayList<>(7);
 
+    public MainServer(int port) {
+        this.port = port;
+    }
 
-    public void start(int port){
+    public void start(){
         try {
             serverSocket = new ServerSocket(port);
             while (connectedClients < 7) {
