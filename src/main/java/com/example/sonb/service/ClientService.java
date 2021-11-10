@@ -44,4 +44,10 @@ public class ClientService {
             e.printStackTrace();
         }
     }
+
+    public void stopClients() {
+        for (int i = 0; i < clientList.size(); i++) {
+            stopClient(i);
+        }
+    }
 }

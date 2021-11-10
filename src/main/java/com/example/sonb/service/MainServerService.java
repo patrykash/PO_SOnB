@@ -28,4 +28,10 @@ public class MainServerService {
     public void stopClientSocket(int clientId) {
         mainServer.clients.get(clientId).close();
     }
+
+    public void stopClientsSockets() {
+        for (int i = 0; i < mainServer.clients.size(); i++) {
+            stopClientSocket(i);
+        }
+    }
 }

@@ -31,7 +31,12 @@ public class ClientController {
     void stopClient(@PathVariable("clientId") int clientId) {
         clientService.stopClient(clientId);
         mainServerService.stopClientSocket(clientId);
+    }
 
+    @GetMapping("/stop")
+    void stopClients() {
+        clientService.stopClients();
+        mainServerService.stopClientsSockets();
     }
 
     @GetMapping("/send/{clientId}")
