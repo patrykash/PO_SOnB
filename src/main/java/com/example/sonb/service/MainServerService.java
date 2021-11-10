@@ -1,6 +1,7 @@
 package com.example.sonb.service;
 
 import com.example.sonb.model.MainServer;
+import com.example.sonb.model.ServerPort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -8,8 +9,8 @@ public class MainServerService {
     MainServer mainServer;
 
     public void startMainServer() {
-        mainServer = new MainServer();
-        mainServer.start(6666);
+        mainServer = new MainServer(ServerPort.MAIN_S.getPortNumber());
+        mainServer.start();
     }
 
     public void stopMainServer() {
