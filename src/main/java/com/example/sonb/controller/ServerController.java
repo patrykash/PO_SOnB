@@ -37,4 +37,9 @@ public class ServerController {
     void read(@PathVariable("clientId") int clientId) {
         mainServerService.readMessage(clientId);
     }
+
+    @GetMapping("/reconnect")
+    void reClient() {
+        mainServerService.reconnect();
+    }
 }

@@ -49,4 +49,14 @@ public class ClientController {
         clientService.readMessage(clientId);
     }
 
+    @GetMapping("/reconnect")
+    void reconnect() {
+        clientService.reconnect();
+    }
+
+    @GetMapping("/connect/{clientId}")
+    void connect(@PathVariable("clientId") int clientId) {
+        clientService.reconnect(clientId);
+    }
+
 }
