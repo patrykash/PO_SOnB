@@ -29,11 +29,44 @@ public class MainServer {
         }
     }
 
+    public void startT(){
+        try {
+            serverSocket = new ServerSocket(port);
+            while (connectedClients < 6) {
+                clients.add(connectedClients,new ClientHandler(serverSocket.accept()));
+                clients.get(connectedClients).start();
+                connectedClients++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void stop() {
         try {
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void reconnect() {
+        try {
+            while (connectedClients < 7) {
+                clients.add(connectedClients,new ClientHandler(serverSocket.accept()));
+                clients.get(connectedClients).start();
+                connectedClients++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reduceClientNumbers() {
+        connectedClients--;
+    }
+
+    public int getPort() {
+        return port;
     }
 }

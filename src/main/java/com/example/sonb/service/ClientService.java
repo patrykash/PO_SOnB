@@ -1,6 +1,6 @@
 package com.example.sonb.service;
 
-import com.example.sonb.model.Client;
+import com.example.sonb.model.MainServer;
 import com.example.sonb.model.ServerPort;
 import com.example.sonb.model.SimpleServer;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class ClientService {
+    private int serverPortNumber = ServerPort.MAIN_S.getPortNumber();
     List<SimpleServer> clientList =  new ArrayList<>();
     public void startClient() {
 
@@ -18,7 +19,30 @@ public class ClientService {
             clientList.add(new SimpleServer(ServerPort.values()[i+1].getPortNumber()));
             clientList.get(i).createClient();
             try {
-                clientList.get(i).getClient().startConnection("127.0.0.1", 6666);
+                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void reconnect() {
+        for (int i = 0; i < 7; i++) {
+            try {
+                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void reconnect(int clientId) {
+        for (int i = 0; i < 7; i++) {
+            if (clientId == i) {
+                continue;
+            }
+            try {
+                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -50,4 +74,13 @@ public class ClientService {
             stopClient(i);
         }
     }
+
+    public MainServer convertToMainServer(int clientId) {
+        System.out.println(serverPortNumber);
+        serverPortNumber = clientList.get(clientId).getPort();
+        System.out.println(serverPortNumber);
+        clientList.get(clientId).startT();
+        return clientList.get(clientId);
+    }
+
 }
