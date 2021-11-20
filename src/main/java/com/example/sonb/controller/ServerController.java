@@ -2,16 +2,13 @@ package com.example.sonb.controller;
 
 import com.example.sonb.service.MainServerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/server")
 public class ServerController {
 
-    private MainServerService mainServerService;
+    private final MainServerService mainServerService;
 
     @Autowired
     public ServerController(MainServerService mainServerService) {
@@ -28,14 +25,24 @@ public class ServerController {
         mainServerService.stopMainServer();
     }
 
-    @GetMapping("send/{clientId}")
+    @GetMapping("/send/{clientId}")
     void send(@PathVariable("clientId") int clientId) {
         mainServerService.sendMessage(clientId);
+    }
+
+    @GetMapping("/send")
+    void send(@RequestBody String message) {
+        mainServerService.sendMessage(message);
     }
 
     @GetMapping("read/{clientId}")
     void read(@PathVariable("clientId") int clientId) {
         mainServerService.readMessage(clientId);
+    }
+
+    @GetMapping("read")
+    void read() {
+        mainServerService.readMessage();
     }
 
     @GetMapping("/reconnect")

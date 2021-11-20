@@ -48,6 +48,7 @@ public class ClientService {
             }
         }
     }
+
     public void sendMessage(int idClient) {
         try {
             clientList.get(idClient).getClient().sendMessage("Test : " + idClient);
@@ -56,9 +57,31 @@ public class ClientService {
         }
     }
 
+    public void sendMessage(String message) {
+        try {
+            for (SimpleServer simpleServer : clientList) {
+                simpleServer.getClient().sendMessage(message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void readMessage(int idClient) {
         String message = clientList.get(idClient).getClient().readMessage();
         System.out.println(message);
+    }
+
+    public void readMessage() {
+        for (SimpleServer simpleServer : clientList) {
+            String message = simpleServer.getClient().readMessage();
+            System.out.println(message);
+            String bergerCodeFromMessage = BergerService.getBergerCodeFromMessage(message);
+            Long decodedBergerCode = BergerService.decodeBerger(bergerCodeFromMessage);
+            System.out.println("ilość jedynek z kodu : " + decodedBergerCode);
+            Long numberOfOnesInMessage = BergerService.countNumberOfOnes(message.substring(0,16));
+            System.out.println("Ilosc jedynek w wiadmości : " + numberOfOnesInMessage);
+        }
     }
 
     public void stopClient(int clientId) {

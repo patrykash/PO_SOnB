@@ -1,5 +1,6 @@
 package com.example.sonb.service;
 
+import com.example.sonb.model.ClientHandler;
 import com.example.sonb.model.MainServer;
 import com.example.sonb.model.ServerPort;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,24 @@ public class MainServerService {
     }
 
     public void sendMessage(int clientId) {
-        System.out.println("MainServer");
-        mainServer.clients.get(clientId).send(clientId);
+        mainServer.clients.get(clientId).send("1111111111111111");
+    }
+
+    public void sendMessage(String message) {
+        String messageInBinary =  BergerService.convertStringToBinary(message);
+        System.out.println("messageInBinary : " + messageInBinary);
+        String messageWithCode = messageInBinary + BergerService.createBergerCode(messageInBinary);
+        mainServer.clients.forEach(it -> it.send(messageWithCode));
     }
 
     public void readMessage(int clientId) {
-        System.out.println("MainServer");
         mainServer.clients.get(clientId).read();
+    }
+
+    public void readMessage() {
+        for (ClientHandler client : mainServer.clients) {
+            client.read();
+        }
     }
 
     public void stopClientSocket(int clientId) {

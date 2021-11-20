@@ -3,10 +3,7 @@ package com.example.sonb.controller;
 import com.example.sonb.service.ClientService;
 import com.example.sonb.service.MainServerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/client")
@@ -44,9 +41,19 @@ public class ClientController {
         clientService.sendMessage(clientId);
     }
 
+    @GetMapping("/send")
+    void sendClient(@RequestBody String message) {
+        clientService.sendMessage(message);
+    }
+
     @GetMapping("/read/{clientId}")
     void readClient(@PathVariable("clientId") int clientId) {
         clientService.readMessage(clientId);
+    }
+
+    @GetMapping("/read")
+    void readClient() {
+        clientService.readMessage();
     }
 
     @GetMapping("/reconnect")

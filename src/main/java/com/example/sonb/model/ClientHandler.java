@@ -31,8 +31,8 @@ public class ClientHandler extends Thread {
         }
     }
 
-    public void send(int clientId) {
-        out.println("Wiadomosc z serwera dla klienta : " + clientId);
+    public void send(String message) {
+        out.println(message);
     }
 
     public void close() {
