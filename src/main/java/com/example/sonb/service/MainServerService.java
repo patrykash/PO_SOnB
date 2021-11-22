@@ -30,7 +30,13 @@ public class MainServerService {
     public void sendMessage(String message) {
         String messageInBinary =  BergerService.convertStringToBinary(message);
         System.out.println("messageInBinary : " + messageInBinary);
-        String messageWithCode = messageInBinary + BergerService.createBergerCode(messageInBinary);
+        String bergerCode;
+        if (BergerService.isIsErrorCodeActive()) {
+            bergerCode = BergerService.getBergerCode(messageInBinary, 0L);
+        } else {
+            bergerCode = BergerService.getBergerCode(messageInBinary);
+        }
+        String messageWithCode = messageInBinary + bergerCode;
         mainServer.clients.forEach(it -> it.send(messageWithCode));
     }
 

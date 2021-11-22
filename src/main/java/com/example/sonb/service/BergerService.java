@@ -3,13 +3,28 @@ package com.example.sonb.service;
 public class BergerService {
 
     private static final Long MAX_NUMBER_ON_BERGER_LENGTH = 31L;
+    private static boolean isErrorCodeActive = false;
 
-    static String createBergerCode(String input) {
+    public static boolean isIsErrorCodeActive() {
+        return isErrorCodeActive;
+    }
+
+    public static void setIsErrorCodeActive(boolean isErrorCodeActive) {
+        BergerService.isErrorCodeActive = isErrorCodeActive;
+    }
+
+    static String getBergerCode(String input) {
+        return createBergerCode(input, MAX_NUMBER_ON_BERGER_LENGTH);
+    }
+
+    static String getBergerCode(String input, Long negationNumber) {
+        return createBergerCode(input, negationNumber);
+    }
+
+    private static String createBergerCode(String input, Long negationNumber) {
         Long numberOfOnes = countNumberOfOnes(input);
-        System.out.println("Liczba jedynek " + numberOfOnes);
-        Long negatedNumberOfOnes = numberOfOnes ^ MAX_NUMBER_ON_BERGER_LENGTH;
-        String bergerCode = Long.toBinaryString(negatedNumberOfOnes);
-        return  bergerCode;
+        long negatedNumberOfOnes = numberOfOnes ^ negationNumber;
+        return Long.toBinaryString(negatedNumberOfOnes);
     }
 
      static Long countNumberOfOnes(String input){
@@ -20,10 +35,9 @@ public class BergerService {
         StringBuilder result = new StringBuilder();
         for (char aChar : input.toCharArray()) {
             result.append(
-                    String.format("%8s", Integer.toBinaryString(aChar))   // char -> int, auto-cast
-                            .replaceAll(" ", "0")                         // zero pads
+                    String.format("%8s", Integer.toBinaryString(aChar))
+                            .replaceAll(" ", "0")
             );
-
         }
         return result.toString();
     }

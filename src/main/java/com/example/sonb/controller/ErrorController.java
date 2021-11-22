@@ -1,6 +1,7 @@
 package com.example.sonb.controller;
 
 import com.example.sonb.model.MainServer;
+import com.example.sonb.service.BergerService;
 import com.example.sonb.service.ClientService;
 import com.example.sonb.service.MainServerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ErrorController {
 
     @GetMapping("/code")
     void runErrorWithCoding() {
-
+        BergerService.setIsErrorCodeActive(true);
     }
 
     @GetMapping("/client")
