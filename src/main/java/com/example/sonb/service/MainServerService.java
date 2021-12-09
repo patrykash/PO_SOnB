@@ -5,6 +5,9 @@ import com.example.sonb.model.MainServer;
 import com.example.sonb.model.ServerPort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MainServerService {
 
@@ -23,11 +26,15 @@ public class MainServerService {
         mainServer.stop();
     }
 
-    public void sendMessage(int clientId) {
-        mainServer.clients.get(clientId).send("1111111111111111");
+    public void sendMessage(int clientId,String message) {
+        this.sendMessage(mainServer.clients.get(clientId),message);
     }
 
     public void sendMessage(String message) {
+        mainServer.clients.forEach(it -> this.sendMessage(it,message));
+    }
+
+    private void sendMessage(ClientHandler client, String message) {
         String messageInBinary =  BergerService.convertStringToBinary(message);
         System.out.println("messageInBinary : " + messageInBinary);
         String bergerCode;
@@ -37,17 +44,20 @@ public class MainServerService {
             bergerCode = BergerService.getBergerCode(messageInBinary);
         }
         String messageWithCode = messageInBinary + bergerCode;
-        mainServer.clients.forEach(it -> it.send(messageWithCode));
+        client.send(messageWithCode);
     }
 
-    public void readMessage(int clientId) {
-        mainServer.clients.get(clientId).read();
+    public String readMessage(int clientId) {
+        return mainServer.clients.get(clientId).read();
     }
 
-    public void readMessage() {
+    public List<String> readMessage() {
+        List<String> messages = new ArrayList<>(7);
         for (ClientHandler client : mainServer.clients) {
-            client.read();
+            messages.add(client.read());
+
         }
+        return messages;
     }
 
     public void stopClientSocket(int clientId) {

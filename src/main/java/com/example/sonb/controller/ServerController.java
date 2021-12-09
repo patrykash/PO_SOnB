@@ -2,7 +2,10 @@ package com.example.sonb.controller;
 
 import com.example.sonb.service.MainServerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/server")
@@ -26,8 +29,8 @@ public class ServerController {
     }
 
     @GetMapping("/send/{clientId}")
-    void send(@PathVariable("clientId") int clientId) {
-        mainServerService.sendMessage(clientId);
+    void send(@PathVariable("clientId") int clientId,@RequestBody String message) {
+        mainServerService.sendMessage(clientId, message);
     }
 
     @GetMapping("/send")
@@ -36,13 +39,13 @@ public class ServerController {
     }
 
     @GetMapping("read/{clientId}")
-    void read(@PathVariable("clientId") int clientId) {
-        mainServerService.readMessage(clientId);
+    ResponseEntity<String> read(@PathVariable("clientId") int clientId) {
+        return ResponseEntity.ok(mainServerService.readMessage(clientId));
     }
 
     @GetMapping("read")
-    void read() {
-        mainServerService.readMessage();
+    ResponseEntity<List<String>> read() {
+        return ResponseEntity.ok(mainServerService.readMessage());
     }
 
     @GetMapping("/reconnect")

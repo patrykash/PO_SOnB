@@ -22,12 +22,14 @@ public class ClientHandler extends Thread {
 
     }
 
-    public void read() {
+    public String read() {
         try {
             String inputLine = in.readLine();
             System.out.println("Wiadomosc dostarczona na serwer : " + inputLine);
+            return inputLine;
         } catch (IOException e) {
             e.printStackTrace();
+            return "0";
         }
     }
 

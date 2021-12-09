@@ -67,14 +67,16 @@ public class ClientService {
         }
     }
 
-    public void readMessage(int idClient) {
+    public String readMessage(int idClient) {
         String message = clientList.get(idClient).getClient().readMessage();
-        System.out.println(message);
+        return message;
     }
 
-    public void readMessage() {
+    public List<String> readMessage() {
+        List<String> messages = new ArrayList<>(7);
         for (SimpleServer simpleServer : clientList) {
             String message = simpleServer.getClient().readMessage();
+            messages.add(message);
             System.out.println(message);
             String bergerCodeFromMessage = BergerService.getBergerCodeFromMessage(message);
             Long decodedBergerCode = BergerService.decodeBerger(bergerCodeFromMessage);
@@ -82,6 +84,7 @@ public class ClientService {
             Long numberOfOnesInMessage = BergerService.countNumberOfOnes(message.substring(0,16));
             System.out.println("Ilosc jedynek w wiadmości : " + numberOfOnesInMessage);
         }
+        return messages;
     }
 
     public void stopClient(int clientId) {
