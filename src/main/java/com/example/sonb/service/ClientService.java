@@ -11,10 +11,10 @@ import java.util.List;
 
 @Service
 public class ClientService {
+
     private int serverPortNumber = ServerPort.MAIN_S.getPortNumber();
     List<SimpleServer> clientList =  new ArrayList<>();
     public void startClient() {
-
         for (int i = 0; i < 7; i++) {
             clientList.add(new SimpleServer(ServerPort.values()[i+1].getPortNumber()));
             clientList.get(i).createClient();
@@ -68,8 +68,7 @@ public class ClientService {
     }
 
     public String readMessage(int idClient) {
-        String message = clientList.get(idClient).getClient().readMessage();
-        return message;
+        return clientList.get(idClient).getClient().readMessage();
     }
 
     public List<String> readMessage() {
@@ -77,12 +76,9 @@ public class ClientService {
         for (SimpleServer simpleServer : clientList) {
             String message = simpleServer.getClient().readMessage();
             messages.add(message);
-            System.out.println(message);
             String bergerCodeFromMessage = BergerService.getBergerCodeFromMessage(message);
             Long decodedBergerCode = BergerService.decodeBerger(bergerCodeFromMessage);
-            System.out.println("ilość jedynek z kodu : " + decodedBergerCode);
             Long numberOfOnesInMessage = BergerService.countNumberOfOnes(message.substring(0,16));
-            System.out.println("Ilosc jedynek w wiadmości : " + numberOfOnesInMessage);
         }
         return messages;
     }
@@ -102,9 +98,7 @@ public class ClientService {
     }
 
     public MainServer convertToMainServer(int clientId) {
-        System.out.println(serverPortNumber);
         serverPortNumber = clientList.get(clientId).getPort();
-        System.out.println(serverPortNumber);
         clientList.get(clientId).startT();
         return clientList.get(clientId);
     }

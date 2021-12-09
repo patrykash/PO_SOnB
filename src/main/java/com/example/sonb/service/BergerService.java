@@ -50,6 +50,4 @@ public class BergerService {
         return message.substring(16);
     }
 
-
-
 }

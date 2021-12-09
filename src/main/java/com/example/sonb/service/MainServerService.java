@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MainServerService {
 
-    MainServer mainServer;
+    private MainServer mainServer;
 
     public void setMainServer(MainServer mainServer) {
         this.mainServer = mainServer;
@@ -36,7 +36,6 @@ public class MainServerService {
 
     private void sendMessage(ClientHandler client, String message) {
         String messageInBinary =  BergerService.convertStringToBinary(message);
-        System.out.println("messageInBinary : " + messageInBinary);
         String bergerCode;
         if (BergerService.isIsErrorCodeActive()) {
             bergerCode = BergerService.getBergerCode(messageInBinary, 0L);
@@ -55,7 +54,6 @@ public class MainServerService {
         List<String> messages = new ArrayList<>(7);
         for (ClientHandler client : mainServer.clients) {
             messages.add(client.read());
-
         }
         return messages;
     }

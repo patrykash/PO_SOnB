@@ -24,9 +24,7 @@ public class ClientHandler extends Thread {
 
     public String read() {
         try {
-            String inputLine = in.readLine();
-            System.out.println("Wiadomosc dostarczona na serwer : " + inputLine);
-            return inputLine;
+            return in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
             return "0";
