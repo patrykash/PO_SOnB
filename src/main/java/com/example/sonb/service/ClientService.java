@@ -13,45 +13,43 @@ import java.util.List;
 public class ClientService {
 
     private int serverPortNumber = ServerPort.MAIN_S.getPortNumber();
-    List<SimpleServer> clientList =  new ArrayList<>();
-    public void startClient() {
+    List<SimpleServer> clientList =  new ArrayList<>(7);
+
+    public void addClients(){
+        clientList.clear();
         for (int i = 0; i < 7; i++) {
             clientList.add(new SimpleServer(ServerPort.values()[i+1].getPortNumber()));
-            clientList.get(i).createClient();
-            try {
-                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
-            } catch (IOException e) {
-                e.printStackTrace();
+        }
+    }
+
+    public void connectClients() {
+        if (clientList.size() == 7){
+            for (int i = 0; i < 7; i++) {
+                try {
+                    clientList.get(i).startConnection("127.0.0.1", serverPortNumber);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public void reconnect() {
-        for (int i = 0; i < 7; i++) {
-            try {
-                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void reconnect(int clientId) {
-        for (int i = 0; i < 7; i++) {
+    public void connectClients(int clientId) {
+        for (int i = 0; i < clientList.size(); i++) {
             if (clientId == i) {
                 continue;
             }
             try {
-                clientList.get(i).getClient().startConnection("127.0.0.1", serverPortNumber);
+                clientList.get(i).startConnection("127.0.0.1", serverPortNumber);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void sendMessage(int idClient) {
+    public void sendMessage(int idClient, String message) {
         try {
-            clientList.get(idClient).getClient().sendMessage("Test : " + idClient);
+            clientList.get(idClient).sendMessage(message);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +58,7 @@ public class ClientService {
     public void sendMessage(String message) {
         try {
             for (SimpleServer simpleServer : clientList) {
-                simpleServer.getClient().sendMessage(message);
+                simpleServer.sendMessage(message);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,24 +66,21 @@ public class ClientService {
     }
 
     public String readMessage(int idClient) {
-        return clientList.get(idClient).getClient().readMessage();
+        return clientList.get(idClient).readMessage();
     }
 
     public List<String> readMessage() {
         List<String> messages = new ArrayList<>(7);
         for (SimpleServer simpleServer : clientList) {
-            String message = simpleServer.getClient().readMessage();
+            String message = simpleServer.readMessage();
             messages.add(message);
-            String bergerCodeFromMessage = BergerService.getBergerCodeFromMessage(message);
-            Long decodedBergerCode = BergerService.decodeBerger(bergerCodeFromMessage);
-            Long numberOfOnesInMessage = BergerService.countNumberOfOnes(message.substring(0,16));
         }
         return messages;
     }
 
     public void stopClient(int clientId) {
         try {
-            clientList.get(clientId).getClient().stopConnection();
+            clientList.get(clientId).stopConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }

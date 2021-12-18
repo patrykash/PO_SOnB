@@ -37,7 +37,7 @@ public class MainServerService {
     private void sendMessage(ClientHandler client, String message) {
         String messageInBinary =  BergerService.convertStringToBinary(message);
         String bergerCode;
-        if (BergerService.isIsErrorCodeActive()) {
+        if (BergerService.isErrorCodeActive()) {
             bergerCode = BergerService.getBergerCode(messageInBinary, 0L);
         } else {
             bergerCode = BergerService.getBergerCode(messageInBinary);

@@ -25,7 +25,8 @@ public class ClientController {
 
     @GetMapping("/start")
     void startClient() {
-        clientService.startClient();
+        clientService.addClients();
+        clientService.connectClients();
     }
 
     @GetMapping("/stop/{clientId}")
@@ -41,8 +42,8 @@ public class ClientController {
     }
 
     @GetMapping("/send/{clientId}")
-    void sendClient(@PathVariable("clientId") int clientId) {
-        clientService.sendMessage(clientId);
+    void sendClient(@RequestBody String message,@PathVariable("clientId") int clientId) {
+        clientService.sendMessage(clientId, message);
     }
 
     @GetMapping("/send")
@@ -62,12 +63,12 @@ public class ClientController {
 
     @GetMapping("/reconnect")
     void reconnect() {
-        clientService.reconnect();
+        clientService.connectClients();
     }
 
     @GetMapping("/connect/{clientId}")
     void connect(@PathVariable("clientId") int clientId) {
-        clientService.reconnect(clientId);
+        clientService.connectClients(clientId);
     }
 
 }

@@ -5,7 +5,7 @@ public class BergerService {
     private static final Long MAX_NUMBER_ON_BERGER_LENGTH = 31L;
     private static boolean isErrorCodeActive = false;
 
-    public static boolean isIsErrorCodeActive() {
+    public static boolean isErrorCodeActive() {
         return isErrorCodeActive;
     }
 
