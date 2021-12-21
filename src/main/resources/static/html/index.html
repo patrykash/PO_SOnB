@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <script src="../js/service.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="system-options">
+        <p>Uruchamianie serwera nadzorującego</p>
+        <button id="startServer">Włącz</button>
+        <p>Podłączenie serwerów klienckich</p>
+        <button id="startClients">Włącz</button>
+    </div>
+    <div class="main-server">
+        <h2>Serwer nadzorujący</h2>
+        <label for="serverMessage">Wiadomość: </label><input id="serverMessage" maxlength="2">
+        <button id="sendMessage">Wyslij</button>
+    </div>
+    <div class="client-servers">
+        <div class="client-server">
+            <h2>Klient 1</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-0" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-0" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 2</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-1" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-1" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 3</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-2" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-2" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 4</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-3" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-3" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 5</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-4" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-4" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 6</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-5" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-5" class="message-container"></div>
+        </div>
+        <div class="client-server">
+            <h2>Klient 7</h2>
+            <p>Wiadomość otrzymana z serwera :</p>
+            <div id="client-message-6" class="message-container"></div>
+            <p>Poprawność otrzymanej wiadomości</p>
+            <div id="client-correction-6" class="message-container"></div>
+        </div>
+    </div>
+    <div class="errors-container"></div>
+</div>
+
+
+</body>
+</html>

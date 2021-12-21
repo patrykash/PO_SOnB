@@ -1,0 +1,58 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+body{
+    height: 100%;
+}
+
+h2{
+    font-size: 1.1em;
+}
+.container{
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fbfbfb;
+}
+.main-server{
+    padding: 40px;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.main-server h2{
+    width: 100%;
+    text-align: center;
+}
+
+#serverMessage{
+    height: 25px;
+}
+
+#sendMessage{
+    height: 25px;
+    width: 100px;
+}
+.client-servers{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.client-server{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.message-container{
+    width: 100%;
+    max-width: 320px;
+    height: 25px;
+    border: black 1px solid;
+}
+
