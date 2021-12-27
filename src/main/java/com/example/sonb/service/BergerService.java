@@ -13,27 +13,27 @@ public class BergerService {
         BergerService.isErrorCodeActive = isErrorCodeActive;
     }
 
-    static String getBergerCode(String input) {
-        return createBergerCode(input, MAX_NUMBER_ON_BERGER_LENGTH);
+    static String createBergerCode(String message) {
+        return createBergerCode(message, MAX_NUMBER_ON_BERGER_LENGTH);
     }
 
-    static String getBergerCode(String input, Long negationNumber) {
-        return createBergerCode(input, negationNumber);
-    }
-
-    private static String createBergerCode(String input, Long negationNumber) {
-        Long numberOfOnes = countNumberOfOnes(input);
+    static String createBergerCode(String message, Long negationNumber) {
+        Long numberOfOnes = countNumberOfOnes(message);
         long negatedNumberOfOnes = numberOfOnes ^ negationNumber;
-        return Long.toBinaryString(negatedNumberOfOnes);
+        String bergerCode =Long.toBinaryString(negatedNumberOfOnes);
+        while (bergerCode.length() < 5) {
+            bergerCode= "0".concat(bergerCode);
+        }
+        return bergerCode;
     }
 
-     static Long countNumberOfOnes(String input){
-        return input.chars().filter(ch -> ch=='1').count();
+     static Long countNumberOfOnes(String message){
+        return message.chars().filter(ch -> ch=='1').count();
     }
 
-    static String convertStringToBinary(String input) {
+    static String convertStringToBinary(String message) {
         StringBuilder result = new StringBuilder();
-        for (char aChar : input.toCharArray()) {
+        for (char aChar : message.toCharArray()) {
             result.append(
                     String.format("%8s", Integer.toBinaryString(aChar))
                             .replaceAll(" ", "0")

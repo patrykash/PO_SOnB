@@ -3,7 +3,6 @@ package com.example.sonb.service;
 import com.example.sonb.model.ClientHandler;
 import com.example.sonb.model.MainServer;
 import com.example.sonb.model.ServerPort;
-import com.example.sonb.model.SimpleServer;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -32,7 +31,7 @@ class MainServerServiceTest {
 
         bergerService.when(() -> BergerService.convertStringToBinary(MESSAGE)).thenReturn("0100000101000010");
         bergerService.when(BergerService::isErrorCodeActive).thenReturn(false);
-        bergerService.when(() -> BergerService.getBergerCode(MESSAGE_IN_BINARY)).thenReturn("11011");
+        bergerService.when(() -> BergerService.createBergerCode(MESSAGE_IN_BINARY)).thenReturn("11011");
 
         mainServerService.sendMessage(MESSAGE);
 
@@ -50,7 +49,7 @@ class MainServerServiceTest {
 
         bergerService.when(() -> BergerService.convertStringToBinary(MESSAGE)).thenReturn("0100000101000010");
         bergerService.when(BergerService::isErrorCodeActive).thenReturn(true);
-        bergerService.when(() -> BergerService.getBergerCode(MESSAGE_IN_BINARY,0L)).thenReturn("00100");
+        bergerService.when(() -> BergerService.createBergerCode(MESSAGE_IN_BINARY,0L)).thenReturn("00100");
 
         mainServerService.sendMessage(MESSAGE);
 
