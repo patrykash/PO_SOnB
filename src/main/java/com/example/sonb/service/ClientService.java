@@ -47,6 +47,14 @@ public class ClientService {
         }
     }
 
+    public void reconnectClient(int clientId){
+        try {
+            clientList.get(clientId).startConnection("127.0.0.1", serverPortNumber);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendMessage(int idClient, String message) {
         try {
             clientList.get(idClient).sendMessage(message);

@@ -72,4 +72,11 @@ public class MainServerService {
     public void reconnect() {
         mainServer.reconnect();
     }
+
+    public void restart() {
+        stopClientsSockets();
+        stopMainServer();
+        BergerService.setIsErrorCodeActive(false);
+        startMainServer();
+    }
 }

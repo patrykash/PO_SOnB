@@ -35,9 +35,9 @@ public class ErrorController {
         BergerService.setIsErrorCodeActive(true);
     }
 
-    @GetMapping("/client")
-    void runErrorWithClient() {
-
+    @GetMapping("/client/{clientId}")
+    void runErrorWithClient(@PathVariable("clientId") int clientId) {
+        clientService.stopClient(clientId);
     }
 
     @GetMapping("/server/fix/{clientId}")
@@ -48,12 +48,13 @@ public class ErrorController {
 
     @GetMapping("/code/fix")
     void fixErrorWithCoding() {
-
+        clientService.stopClients();
+        mainServerService.restart();
     }
 
     @GetMapping("/client/fix")
     void fixErrorWithClient() {
-
+        clientService.connectClients();
     }
 
 }

@@ -138,6 +138,21 @@ class ClientServiceTest {
         }
     }
 
+    @Test
+    void shouldStartConnectionForChosenClient() {
+        clientService.clientList = createClients();
+
+        clientService.reconnectClient(1);
+
+        try {
+            verify(clientService.clientList.get(0), times(0)).startConnection(IP, SERVER_PORT_NUMBER);
+            verify(clientService.clientList.get(1), times(1)).startConnection(IP, SERVER_PORT_NUMBER);
+            verify(clientService.clientList.get(2), times(0)).startConnection(IP, SERVER_PORT_NUMBER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     List<SimpleServer> createClients() {
         SimpleServer client = mock(SimpleServer.class);
         SimpleServer client2 = mock(SimpleServer.class);
