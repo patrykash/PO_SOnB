@@ -9,46 +9,70 @@ h2{
     font-size: 1.1em;
 }
 .container{
-    height: 90vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #fbfbfb;
 }
-.main-server{
-    padding: 40px;
-    width: 60%;
+
+.servers{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 
-.main-server h2{
+.main-server{
+    padding: 40px;
+    /*width: 60%;*/
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.main-server div{
     width: 100%;
     text-align: center;
 }
 
 #serverMessage{
     height: 25px;
+    width: 80px;
 }
 
 #sendMessage{
     height: 25px;
     width: 100px;
 }
+
 .client-servers{
     width: 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
+
 .client-server{
-    width: 30%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 20px;
 }
+
+.server-title{
+    display: flex;
+    justify-content: center;
+}
+
+.status-img{
+    width: 19px;
+    margin-left: 10px;
+}
+
 .message-container{
     width: 100%;
     max-width: 320px;
@@ -56,3 +80,35 @@ h2{
     border: black 1px solid;
 }
 
+.system-options{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.options-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.options{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.option{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.option button{
+    width: 40%;
+    max-width: 90px;
+}

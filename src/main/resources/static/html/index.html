@@ -5,70 +5,165 @@
     <title>Title</title>
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <script src="../js/main.js"></script>
     <script src="../js/service.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="system-options">
-        <p>Uruchamianie serwera nadzorującego</p>
-        <button id="startServer">Włącz</button>
-        <p>Podłączenie serwerów klienckich</p>
-        <button id="startClients">Włącz</button>
+        <div class="main-server">
+            <div class="server-title">
+                <h2>Serwer nadzorujący</h2>
+                <img src="../img/offline.svg" class="status-img">
+            </div>
+            <label for="serverMessage">Wiadomość: </label><input id="serverMessage" maxlength="2">
+            <button id="sendMessage">Wyslij</button>
+        </div>
+        <div class="options-container">
+            <h2>Sterowanie</h2>
+            <div class="options">
+                <div class="option" style="width: 100%">
+                    <p>Uruchamianie serwera nadzorującego</p>
+                    <button id="startServer">Włącz</button>
+                </div>
+                <div class="option" style="width: 100%">
+                    <p>Podłączenie serwerów klienckich</p>
+                    <button id="startClients">Włącz</button>
+                </div>
+            </div>
+        </div>
+        <div class="options-container">
+            <h2>Błędy</h2>
+            <div class="options">
+                <div class="option">
+                    <p>Błąd serwera</p>
+                    <button id="serverError">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd kodowania</p>
+                    <button id="codeError">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd klienta</p>
+                    <button id="clientError">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd odpowiedzi klienta</p>
+                    <button id="clientAnswerError">Włącz</button>
+                </div>
+            </div>
+        </div>
+        <div class="options-container">
+            <h2>Naprawa błedów</h2>
+            <div class="options">
+                <div class="option">
+                    <p>Błąd serwera</p>
+                    <button id="serverFix">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd kodowania</p>
+                    <button id="codeFix">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd klienta</p>
+                    <button id="clientFix">Włącz</button>
+                </div>
+                <div class="option">
+                    <p>Błąd odpowiedzi klienta</p>
+                    <button id="clientAnswerFix">Włącz</button>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="main-server">
-        <h2>Serwer nadzorujący</h2>
-        <label for="serverMessage">Wiadomość: </label><input id="serverMessage" maxlength="2">
-        <button id="sendMessage">Wyslij</button>
-    </div>
-    <div class="client-servers">
-        <div class="client-server">
-            <h2>Klient 1</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-0" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-0" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 2</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-1" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-1" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 3</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-2" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-2" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 4</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-3" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-3" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 5</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-4" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-4" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 6</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-5" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-5" class="message-container"></div>
-        </div>
-        <div class="client-server">
-            <h2>Klient 7</h2>
-            <p>Wiadomość otrzymana z serwera :</p>
-            <div id="client-message-6" class="message-container"></div>
-            <p>Poprawność otrzymanej wiadomości</p>
-            <div id="client-correction-6" class="message-container"></div>
+    <div class="servers">
+        <div class="client-servers">
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 1</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-0" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-0" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-0" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 2</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-1" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-1" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-1" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 3</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-2" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-2" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-2" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 4</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-3" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-3" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-3" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 5</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-4" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-4" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-4" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <div class="server-title">
+                        <h2>Klient 6</h2>
+                        <img src="../img/offline.svg" class="status-img">
+                    </div>
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-5" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-5" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-5" class="message-container"></div>
+            </div>
+            <div class="client-server">
+                <div class="server-title">
+                    <h2>Klient 7</h2>
+                    <img src="../img/offline.svg" class="status-img">
+                </div>
+                <p>Wiadomość otrzymana z serwera :</p>
+                <div id="client-message-6" class="message-container"></div>
+                <p>Kod bergera :</p>
+                <div id="code-message-6" class="message-container"></div>
+                <p>Poprawność otrzymanej wiadomości</p>
+                <div id="client-correction-6" class="message-container"></div>
+            </div>
         </div>
     </div>
     <div class="errors-container"></div>
