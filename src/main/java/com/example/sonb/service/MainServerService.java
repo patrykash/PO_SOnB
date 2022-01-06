@@ -22,6 +22,11 @@ public class MainServerService {
         mainServer.start();
     }
 
+    public void startMainServer(int port) {
+        mainServer = new MainServer(port);
+        mainServer.start();
+    }
+
     public void stopMainServer() {
         mainServer.stop();
     }
@@ -58,8 +63,14 @@ public class MainServerService {
         return messages;
     }
 
+    public void startClientSocket(int clientId) {
+        mainServer.reconnect(clientId);
+        mainServer.increaseClientNumbers();
+    }
+
     public void stopClientSocket(int clientId) {
         mainServer.clients.get(clientId).close();
+        mainServer.clients.get(clientId).interrupt();
         mainServer.reduceClientNumbers();
     }
 
@@ -69,14 +80,10 @@ public class MainServerService {
         }
     }
 
-    public void reconnect() {
-        mainServer.reconnect();
-    }
-
     public void restart() {
         stopClientsSockets();
         stopMainServer();
         BergerService.setIsErrorCodeActive(false);
-        startMainServer();
+        startMainServer(mainServer.getPort());
     }
 }
