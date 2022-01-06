@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class SimpleServer extends MainServer {
     private Client client;
+    private boolean isConnected = false;
 
     public SimpleServer(int port) {
         super(port);
@@ -11,10 +12,12 @@ public class SimpleServer extends MainServer {
     }
 
     public void startConnection(String ip, int serverPortNumber) throws IOException {
+        isConnected = true;
         client.startConnection(ip, serverPortNumber);
     }
 
     public void stopConnection() throws IOException {
+        isConnected = false;
         client.stopConnection();
     }
 
@@ -25,7 +28,9 @@ public class SimpleServer extends MainServer {
     public String readMessage() {
         return client.readMessage();
     }
-    /*public Client getClient() {
-        return client;
-    }*/
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
 }

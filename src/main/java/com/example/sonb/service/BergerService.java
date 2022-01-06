@@ -46,8 +46,19 @@ public class BergerService {
         return Long.parseUnsignedLong(input, 2) ^ MAX_NUMBER_ON_BERGER_LENGTH;
     }
 
-    static String getBergerCodeFromMessage(String message) {
+    public static String getBergerCodeFromMessage(String message) {
         return message.substring(16);
     }
 
+    public static String getMessageContentFromMessage(String message) {
+        return message.substring(0, 16);
+    }
+
+    public static boolean isMessageCorrect(String message) {
+        String bergerCode = getBergerCodeFromMessage(message);
+        String messageContent = getMessageContentFromMessage(message);
+        long numberOfOnesInMessageContent = countNumberOfOnes(messageContent);
+        long decodedBergerCode = decodeBerger(bergerCode);
+        return numberOfOnesInMessageContent == decodedBergerCode;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.sonb.service;
 
+import com.example.sonb.dto.MessageDto;
 import com.example.sonb.model.MainServer;
 import com.example.sonb.model.ServerPort;
 import com.example.sonb.model.SimpleServer;
@@ -80,11 +81,28 @@ public class ClientService {
     public List<String> readMessage() {
         List<String> messages = new ArrayList<>(7);
         for (SimpleServer simpleServer : clientList) {
-            String message = simpleServer.readMessage();
-            messages.add(message);
+            if (simpleServer.isConnected()){
+                String message = simpleServer.readMessage();
+                messages.add(message);
+            } else {
+                messages.add("");
+            }
         }
         return messages;
     }
+
+    public List<MessageDto> convertMessagesToDto(List<String> messages) {
+        List<MessageDto> messagesDto = new ArrayList<>();
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).isEmpty()) {
+                messagesDto.add(new MessageDto(i));
+            } else {
+                messagesDto.add(new MessageDto(messages.get(i)));
+            }
+        }
+        return messagesDto;
+    }
+
 
     public void stopClient(int clientId) {
         try {
