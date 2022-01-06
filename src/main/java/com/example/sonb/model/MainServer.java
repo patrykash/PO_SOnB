@@ -50,13 +50,10 @@ public class MainServer {
         }
     }
 
-    public void reconnect() {
+    public void reconnect(int clientId) {
         try {
-            while (connectedClients < 7) {
-                clients.add(connectedClients,new ClientHandler(serverSocket.accept()));
-                clients.get(connectedClients).start();
+                clients.get(clientId).restart(serverSocket.accept());
                 connectedClients++;
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,6 +61,10 @@ public class MainServer {
 
     public void reduceClientNumbers() {
         connectedClients--;
+    }
+
+    public void increaseClientNumbers() {
+        connectedClients++;
     }
 
     public int getPort() {
