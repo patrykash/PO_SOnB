@@ -1,11 +1,13 @@
 package com.example.sonb.controller;
 
+import com.example.sonb.dto.MessageDto;
 import com.example.sonb.service.ClientService;
 import com.example.sonb.service.MainServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,8 +59,9 @@ public class ClientController {
     }
 
     @GetMapping("/read")
-    ResponseEntity<List<String>> readClient() {
-       return ResponseEntity.ok( clientService.readMessage());
+    ResponseEntity<List<MessageDto>> readClient() {
+        List<String> messages = clientService.readMessage();
+        return ResponseEntity.ok(clientService.convertMessagesToDto(messages));
     }
 
     @GetMapping("/reconnect")

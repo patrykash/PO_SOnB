@@ -23,7 +23,7 @@ public class Client {
     }
 
     public String readMessage() {
-        String resp = null;
+        String resp = "";
         try {
             resp = in.readLine();
         } catch (IOException e) {

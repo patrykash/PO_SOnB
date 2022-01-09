@@ -33,8 +33,10 @@ public class ServerController {
         mainServerService.sendMessage(clientId, message);
     }
 
-    @GetMapping("/send")
+    @PostMapping("/send")
     void send(@RequestBody String message) {
+        System.out.println(message);
+        System.out.println(message.length());
         mainServerService.sendMessage(message);
     }
 
@@ -48,8 +50,4 @@ public class ServerController {
         return ResponseEntity.ok(mainServerService.readMessage());
     }
 
-    @GetMapping("/reconnect")
-    void reClient() {
-        mainServerService.reconnect();
-    }
 }

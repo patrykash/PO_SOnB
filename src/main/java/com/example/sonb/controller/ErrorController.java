@@ -38,6 +38,7 @@ public class ErrorController {
     @GetMapping("/client/{clientId}")
     void runErrorWithClient(@PathVariable("clientId") int clientId) {
         clientService.stopClient(clientId);
+        mainServerService.stopClientSocket(clientId);
     }
 
     @GetMapping("/server/fix/{clientId}")
@@ -52,9 +53,10 @@ public class ErrorController {
         mainServerService.restart();
     }
 
-    @GetMapping("/client/fix")
-    void fixErrorWithClient() {
-        clientService.connectClients();
+    @GetMapping("/client/fix/{clientId}")
+    void fixErrorWithClient(@PathVariable("clientId") int clientId) {
+        clientService.reconnectClient(clientId);
+        mainServerService.startClientSocket(clientId);
     }
 
 }
