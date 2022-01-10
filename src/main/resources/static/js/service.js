@@ -1,6 +1,6 @@
 'use strict';
 window.onload = init;
-let serverId=0;
+let serverId=-1;
 let serverError = false;
 
 function startServer() {
@@ -79,31 +79,46 @@ function getAnswers() {
 
 function setAnswers(answers){
     for (let i = 0; i < answers.length; i++) {
+        if (i===serverId){
+            continue
+        }
         document.getElementById("client-message-"+ i).textContent = answers[i].message
         document.getElementById("code-message-"+ i).textContent = answers[i].bergerCode
         console.log(answers[i].correct)
-        if (answers[i].correct){
-            document.getElementById("client-correction-"+ i).textContent = 'Poprawna wiadomość'
-        } else{
-            document.getElementById("client-correction-"+ i).textContent = 'Blędna wiadomość'
-        }
+        setCorrectness(answers[i].correct, i)
+    }
+}
+
+function setCorrectness(isCorrect, clientId){
+    if (isCorrect){
+        document.getElementById("client-correction-"+ clientId).textContent = 'Poprawna wiadomość'
+    } else{
+        document.getElementById("client-correction-"+ clientId).textContent = 'Blędna wiadomość'
     }
 }
 function getMessage() {
-    let message = document.getElementById("serverMessage").value.toString();
+    let message
+    if(serverError){
+        message = document.getElementById("tempServerMessage").value.toString();
+    } else {
+        message = document.getElementById("serverMessage").value.toString();
+    }
+
     console.log("wiadomosc z inputa : " + message);
     console.log("wiadomosc z inputa : " + message.length);
     sendMessage(message);
 }
 
 function runErrorWithServer() {
-    serverId=1;
+    //serverId=1;
+    document.getElementById("sendMessage").removeEventListener("click", getMessage)
     serverError = true;
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/error/server', true);
     xhr.send(null);
     xhr.onload = function () {
         if (xhr.status === 200){
+            setStatusImage(false,0)
             console.log("/error/server")
         }
     };
@@ -121,33 +136,47 @@ function runErrorWithCoding() {
 }
 
 function runErrorWithClient() {
-    let clientId = 1
+    let clientId = getWorkingClientId()
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/error/client/'+clientId, true);
     xhr.send(null);
     xhr.onload = function () {
         if (xhr.status === 200){
-            setStatusImage(false, clientId)
+            console.log(clientId+1)
+            setStatusImage(false, Number(clientId)+1)
             console.log('/error/client/'+clientId)
         }
     };
 }
 
+function getWorkingClientId(){
+    return document.getElementById('workingClient').value.toString();
+}
+
 function fixErrorWithServer() {
-    serverId =1;
-    let clientId = 1
+    let clientId = getTempServerId();
+    serverId =Number(clientId);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/error/server/fix/'+clientId, true);
     xhr.send(null)
     xhr.onload = function () {
         if (xhr.status === 200){
+            clearClientServerBody(clientId)
+            createTemporaryMainServerBody(clientId)
             console.log('/error/server/fix/'+clientId)
         }
     };
 }
 
+function getTempServerId() {
+    return document.getElementById('tempServer').value.toString();
+}
+
 function fixErrorWithCoding() {
     let xhr = new XMLHttpRequest();
+    setStatusImages(false)
+    sleep(2000).then(r => setStatusImage(true,0));
+
     xhr.open('GET', '/error/code/fix', true);
     xhr.send(null);
     xhr.onload = function () {
@@ -158,18 +187,20 @@ function fixErrorWithCoding() {
 }
 
 function fixErrorWithClient() {
-    let clientId = 1
+    let clientId = getBrokenClientId()
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/error/client/fix/'+clientId, true);
     xhr.send(null);
     xhr.onload = function () {
         if (xhr.status === 200){
-            setStatusImage(true, clientId)
+            setStatusImage(true, Number(clientId)+1)
             console.log('/client/fix/'+clientId)
         }
     };
 }
-
+function getBrokenClientId() {
+    return document.getElementById('brokenClientId').value.toString();
+}
 function setStatusImages(isOn){
     let images =  document.getElementsByClassName("status-img")
     for (let image of images) {
@@ -180,6 +211,9 @@ function setStatusImages(isOn){
         }
 
     }
+    if (serverError){
+        images[0].src = '../img/offline.svg'
+    }
 }
 function setStatusImage(isOn, clientId){
     let images =  document.getElementsByClassName("status-img")
@@ -188,4 +222,38 @@ function setStatusImage(isOn, clientId){
     } else {
         images[clientId].src = '../img/offline.svg'
     }
+}
+
+function clearClientServerBody(clientId){
+    let clearedClient = document.getElementsByClassName('client-server')[clientId]
+    while (clearedClient.childElementCount>1){
+        clearedClient.children[1].remove()
+    }
+}
+
+function createTemporaryMainServerBody(clientId){
+    let tempLabel = document.createElement('label')
+    tempLabel.setAttribute('for', 'tempServerMessage')
+    tempLabel.textContent = 'Wiadomość :'
+    tempLabel.style.marginTop = '15px'
+    let tempInput = document.createElement('input')
+    tempInput.setAttribute('id','tempServerMessage')
+    tempInput.setAttribute('maxlength', '2')
+    tempInput.classList.add('server-message')
+    /*tempInput.style.marginTop = '15px'*/
+    let tempButton = document.createElement('button')
+    tempButton.setAttribute('id','tempSendMessage')
+    tempButton.innerText = 'Wyślij'
+    tempButton.classList.add('send-button')
+    /*tempButton.style.marginTop = '15px*/
+    tempButton.addEventListener("click",getMessage)
+    let clearedClient = document.getElementsByClassName('client-server')[clientId]
+    clearedClient.appendChild(tempLabel)
+    clearedClient.appendChild(tempInput)
+    clearedClient.appendChild(tempButton)
+
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

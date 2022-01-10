@@ -16,10 +16,11 @@
                 <h2>Serwer nadzorujący</h2>
                 <img src="../img/offline.svg" class="status-img">
             </div>
-            <label for="serverMessage">Wiadomość: </label><input id="serverMessage" maxlength="2">
-            <button id="sendMessage">Wyslij</button>
+            <label for="serverMessage">Wiadomość: </label>
+            <input id="serverMessage" class="server-message" maxlength="2">
+            <button id="sendMessage" class="send-button">Wyslij</button>
         </div>
-        <div class="options-container">
+        <div class="options-container" style="width: 20%">
             <h2>Sterowanie</h2>
             <div class="options">
                 <div class="option" style="width: 100%">
@@ -40,16 +41,14 @@
                     <button id="serverError">Włącz</button>
                 </div>
                 <div class="option">
+                    <p>Błąd klienta</p>
+                    <label for="workingClient">Id klienta: </label>
+                    <input id="workingClient" type="number" min="0" max="6" class="server-message" >
+                    <button id="clientError" class="send-button">Włącz</button>
+                </div>
+                <div class="option">
                     <p>Błąd kodowania</p>
                     <button id="codeError">Włącz</button>
-                </div>
-                <div class="option">
-                    <p>Błąd klienta</p>
-                    <button id="clientError">Włącz</button>
-                </div>
-                <div class="option">
-                    <p>Błąd odpowiedzi klienta</p>
-                    <button id="clientAnswerError">Włącz</button>
                 </div>
             </div>
         </div>
@@ -58,19 +57,20 @@
             <div class="options">
                 <div class="option">
                     <p>Błąd serwera</p>
-                    <button id="serverFix">Włącz</button>
-                </div>
-                <div class="option">
-                    <p>Błąd kodowania</p>
-                    <button id="codeFix">Włącz</button>
+                    <label for="tempServer">Id klienta: </label>
+                    <input id="tempServer" type="number" min="0" max="6" class="server-message">
+                    <button id="serverFix" class="send-button">Napraw</button>
+                    <!--<button id="serverFix">Napraw</button>-->
                 </div>
                 <div class="option">
                     <p>Błąd klienta</p>
-                    <button id="clientFix">Włącz</button>
+                    <label for="brokenClientId">Id klienta: </label>
+                    <input id="brokenClientId" type="number" min="0" max="6" class="server-message" >
+                    <button id="clientFix" class="send-button">Napraw</button>
                 </div>
                 <div class="option">
-                    <p>Błąd odpowiedzi klienta</p>
-                    <button id="clientAnswerFix">Włącz</button>
+                    <p>Błąd kodowania</p>
+                    <button id="codeFix">Napraw</button>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
         <div class="client-servers">
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 1</h2>
+                    <h2>Klient 0</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
@@ -92,7 +92,7 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 2</h2>
+                    <h2>Klient 1</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
@@ -104,7 +104,7 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 3</h2>
+                    <h2>Klient 2</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
@@ -116,7 +116,7 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 4</h2>
+                    <h2>Klient 3</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
@@ -128,7 +128,7 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 5</h2>
+                    <h2>Klient 4</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
@@ -140,10 +140,8 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <div class="server-title">
-                        <h2>Klient 6</h2>
-                        <img src="../img/offline.svg" class="status-img">
-                    </div>
+                    <h2>Klient 5</h2>
+                    <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>
                 <div id="client-message-5" class="message-container"></div>
@@ -154,7 +152,7 @@
             </div>
             <div class="client-server">
                 <div class="server-title">
-                    <h2>Klient 7</h2>
+                    <h2>Klient 6</h2>
                     <img src="../img/offline.svg" class="status-img">
                 </div>
                 <p>Wiadomość otrzymana z serwera :</p>

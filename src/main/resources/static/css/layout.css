@@ -23,14 +23,11 @@ h2{
 }
 
 .main-server{
-    padding: 40px;
     /*width: 60%;*/
     height: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-
 }
 
 .main-server div{
@@ -38,14 +35,16 @@ h2{
     text-align: center;
 }
 
-#serverMessage{
+.server-message{
     height: 25px;
     width: 80px;
+    margin-top: 15px;
 }
 
-#sendMessage{
+.send-button{
     height: 25px;
     width: 100px;
+    margin-top: 15px;
 }
 
 .client-servers{
@@ -64,6 +63,7 @@ h2{
 }
 
 .server-title{
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
 }
@@ -89,15 +89,15 @@ h2{
 .options-container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    width: 30%;
 }
-
 .options{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+    width: 100%;
 }
 
 .option{
