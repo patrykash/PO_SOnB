@@ -72,13 +72,9 @@ class ClientServiceTest {
 
         clientService.sendMessage(MESSAGE);
 
-        try {
             verify(clientService.clientList.get(0), times(1)).sendMessage(MESSAGE);
             verify(clientService.clientList.get(1), times(1)).sendMessage(MESSAGE);
             verify(clientService.clientList.get(2), times(1)).sendMessage(MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
@@ -87,25 +83,40 @@ class ClientServiceTest {
 
         clientService.sendMessage(1,MESSAGE);
 
-        try {
+
             verify(clientService.clientList.get(0), times(0)).sendMessage(MESSAGE);
             verify(clientService.clientList.get(1), times(1)).sendMessage(MESSAGE);
             verify(clientService.clientList.get(2), times(0)).sendMessage(MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
-    void shouldReadMessageForEachClients(){
+    void shouldReadMessageForEachClientsWhenIsConnected(){
         clientService.clientList = createClients();
         when(clientService.clientList.get(0).readMessage()).thenReturn(MESSAGE);
         when(clientService.clientList.get(1).readMessage()).thenReturn(MESSAGE);
         when(clientService.clientList.get(2).readMessage()).thenReturn(MESSAGE);
 
+        when(clientService.clientList.get(0).isConnected()).thenReturn(true);
+        when(clientService.clientList.get(1).isConnected()).thenReturn(true);
+        when(clientService.clientList.get(2).isConnected()).thenReturn(true);
+
+
         assertThat(clientService.readMessage())
                 .hasSize(3)
                 .contains(MESSAGE, MESSAGE, MESSAGE);
+    }
+
+    @Test
+    void shouldReadEmptyMessageForEachClientsWhenIsNotConnected(){
+        clientService.clientList = createClients();
+        when(clientService.clientList.get(0).isConnected()).thenReturn(false);
+        when(clientService.clientList.get(1).isConnected()).thenReturn(false);
+        when(clientService.clientList.get(2).isConnected()).thenReturn(false);
+
+
+        assertThat(clientService.readMessage())
+                .hasSize(3)
+                .contains("", "", "");
     }
 
     @Test

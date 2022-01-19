@@ -25,17 +25,16 @@ class BergerServiceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0100000101000001, 00100",
-            "0000000000000000, 00000",
-            "1111111111111111, 10000",
-            "1111111100000000, 01000",
+            "0100000101000001, 1111111111111111",
+            "0000000000000000, 1111111111111111",
+            "1111111111111111, 0000000000000000",
+            "1111111100000000, 1111111111111111",
 
 
     })
-    void shouldCreateIncorrectBergerCodeForMessageWhenNegationNumberIsZero(String message, String inCorrectBergerCode) {
-        String bergerCode = BergerService.createBergerCode(message,0L);
-
-        assertThat(bergerCode).isEqualTo(inCorrectBergerCode);
+    void shouldCreateIncorrectMessageWhen(String message, String incorrectMessage) {
+        String bergerCode = BergerService.convertToMessageWithError(message);
+        assertThat(bergerCode).isEqualTo(incorrectMessage);
     }
 
     @ParameterizedTest
