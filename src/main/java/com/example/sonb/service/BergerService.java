@@ -17,7 +17,7 @@ public class BergerService {
         return createBergerCode(message, MAX_NUMBER_ON_BERGER_LENGTH);
     }
 
-    static String createBergerCode(String message, Long negationNumber) {
+    private static String createBergerCode(String message, Long negationNumber) {
         Long numberOfOnes = countNumberOfOnes(message);
         long negatedNumberOfOnes = numberOfOnes ^ negationNumber;
         String bergerCode =Long.toBinaryString(negatedNumberOfOnes);
@@ -59,6 +59,20 @@ public class BergerService {
         String messageContent = getMessageContentFromMessage(message);
         long numberOfOnesInMessageContent = countNumberOfOnes(messageContent);
         long decodedBergerCode = decodeBerger(bergerCode);
+        System.out.println("numberOfOnesInMessageContent" + numberOfOnesInMessageContent);
+        System.out.println("decodedBergerCode" + decodedBergerCode);
         return numberOfOnesInMessageContent == decodedBergerCode;
+    }
+
+    public static String convertToMessageWithError(String messageInBinary) {
+        boolean isContainsZero = messageInBinary.contains("0");
+        String incorrectMessageInBinary;
+        if (isContainsZero) {
+            incorrectMessageInBinary = messageInBinary.replaceAll("0", "1");
+        } else {
+            incorrectMessageInBinary = messageInBinary.replaceAll("1", "0");
+        }
+        System.out.println("message with error: " + incorrectMessageInBinary);
+        return incorrectMessageInBinary;
     }
 }

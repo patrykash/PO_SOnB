@@ -21,7 +21,7 @@ public class SimpleServer extends MainServer {
         client.stopConnection();
     }
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message){
         client.sendMessage(message);
     }
 

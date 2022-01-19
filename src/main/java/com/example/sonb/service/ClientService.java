@@ -57,20 +57,12 @@ public class ClientService {
     }
 
     public void sendMessage(int idClient, String message) {
-        try {
-            clientList.get(idClient).sendMessage(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        clientList.get(idClient).sendMessage(message);
     }
 
     public void sendMessage(String message) {
-        try {
-            for (SimpleServer simpleServer : clientList) {
-                simpleServer.sendMessage(message);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (SimpleServer simpleServer : clientList) {
+            simpleServer.sendMessage(message);
         }
     }
 
@@ -102,6 +94,13 @@ public class ClientService {
         }
         return messagesDto;
     }
+    public MessageDto convertMessagesToDto(String message) {
+            if (message.isEmpty()) {
+                return new MessageDto();
+            } else {
+                return new MessageDto(message);
+            }
+    }
 
 
     public void stopClient(int clientId) {
@@ -124,4 +123,15 @@ public class ClientService {
         return clientList.get(clientId);
     }
 
+    public void sendStatusMessageToServer(List<MessageDto> messageDtos) {
+        String statusMessage;
+        for (int i = 0; i < messageDtos.size(); i++) {
+            if (messageDtos.get(i).isCorrect()){
+                statusMessage = "OK";
+            } else {
+                statusMessage = "ERROR";
+            }
+            sendMessage(i,statusMessage);
+        }
+    }
 }

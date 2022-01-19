@@ -24,6 +24,10 @@ public class MessageDto {
         this.isCorrect = false;
     }
 
+    public MessageDto() {
+
+    }
+
     public String getMessage() {
         return message;
     }
