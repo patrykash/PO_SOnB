@@ -11,6 +11,13 @@ public class MessageDto {
     private boolean isCorrect;
 
     private Integer clientId;
+
+    public MessageDto() {
+        this.message = "No connection";
+        this.bergerCode = "00000";
+        this.isCorrect = false;
+    }
+
     public MessageDto(String message) {
         this.message = BergerService.getMessageContentFromMessage(message);
         this.bergerCode = BergerService.getBergerCodeFromMessage(message);
@@ -22,10 +29,6 @@ public class MessageDto {
         this.message = "No connection";
         this.bergerCode = "00000";
         this.isCorrect = false;
-    }
-
-    public MessageDto() {
-
     }
 
     public String getMessage() {

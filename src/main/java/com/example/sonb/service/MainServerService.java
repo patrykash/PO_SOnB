@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class MainServerService {
 
     private MainServer mainServer;
+
+    private String actualMessage = "  ";
 
     public void setMainServer(MainServer mainServer) {
         this.mainServer = mainServer;
@@ -36,16 +39,25 @@ public class MainServerService {
     }
 
     public void sendMessage(String message) {
+        actualMessage = message;
         mainServer.clients.forEach(it -> this.sendMessage(it,message));
     }
 
     private void sendMessage(ClientHandler client, String message) {
+        Random rand = new Random(); //instance of random class
+        int int_random = rand.nextInt(2);
         String messageInBinary =  BergerService.convertStringToBinary(message);
         String bergerCode;
-        if (BergerService.isErrorCodeActive()) {
+        /*if (BergerService.isErrorCodeActive()) {
             bergerCode = BergerService.createBergerCode(messageInBinary, 0L);
         } else {
             bergerCode = BergerService.createBergerCode(messageInBinary);
+        }*/
+        bergerCode = BergerService.createBergerCode(messageInBinary);
+        if (BergerService.isErrorCodeActive()){
+            if (int_random == 1) {
+                messageInBinary =  BergerService.convertToMessageWithError(messageInBinary);
+            }
         }
         String messageWithCode = messageInBinary + bergerCode;
         client.send(messageWithCode);
@@ -58,7 +70,12 @@ public class MainServerService {
     public List<String> readMessage() {
         List<String> messages = new ArrayList<>(7);
         for (ClientHandler client : mainServer.clients) {
-            messages.add(client.read());
+            String statusMessage = client.read();
+            if (statusMessage.equals("ERROR")) {
+                BergerService.setIsErrorCodeActive(false);
+
+            }
+            messages.add(statusMessage);
         }
         return messages;
     }
@@ -85,5 +102,13 @@ public class MainServerService {
         stopMainServer();
         BergerService.setIsErrorCodeActive(false);
         startMainServer(mainServer.getPort());
+    }
+
+    public void reSendMessage(List<String> statusMessages) {
+        for (int i = 0; i < statusMessages.size() ; i++) {
+            if (statusMessages.get(i).equals("ERROR")) {
+                sendMessage(i, actualMessage);
+            }
+        }
     }
 }
