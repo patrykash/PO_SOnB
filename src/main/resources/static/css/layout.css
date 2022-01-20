@@ -1,0 +1,131 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+body{
+    height: 100%;
+}
+
+h2{
+    font-size: 1.1em;
+}
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fbfbfb;
+}
+
+.servers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-server{
+    /*width: 60%;*/
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-server div{
+    width: 100%;
+    text-align: center;
+}
+
+.server-message{
+    height: 25px;
+    width: 80px;
+    margin-top: 15px;
+}
+
+.send-button{
+    height: 25px;
+    width: 100px;
+    margin-top: 15px;
+}
+
+.client-servers{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.client-server{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.server-title{
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.status-img{
+    width: 19px;
+    margin-left: 10px;
+}
+
+.message-container{
+    width: 100%;
+    max-width: 320px;
+    height: 25px;
+    border: black 1px solid;
+}
+
+.system-options{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.options-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+.options{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.option{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.option button{
+    width: 40%;
+    max-width: 90px;
+}
+
+.server-status{
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.server-status-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.server-status-message{
+    width: 33%;
+}
