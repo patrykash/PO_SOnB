@@ -54,14 +54,17 @@ public class ClientController {
     }
 
     @GetMapping("/read/{clientId}")
-    ResponseEntity<String> readClient(@PathVariable("clientId") int clientId) {
-        return ResponseEntity.ok(clientService.readMessage(clientId));
+    ResponseEntity<MessageDto> readClient(@PathVariable("clientId") int clientId) {
+        String message = clientService.readMessage(clientId);
+        return ResponseEntity.ok(clientService.convertMessagesToDto(message));
     }
 
     @GetMapping("/read")
     ResponseEntity<List<MessageDto>> readClient() {
         List<String> messages = clientService.readMessage();
-        return ResponseEntity.ok(clientService.convertMessagesToDto(messages));
+        List<MessageDto> messageDtos = clientService.convertMessagesToDto(messages);
+        clientService.sendStatusMessageToServer(messageDtos);
+        return ResponseEntity.ok(messageDtos);
     }
 
     @GetMapping("/reconnect")

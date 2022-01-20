@@ -40,14 +40,16 @@ public class ServerController {
         mainServerService.sendMessage(message);
     }
 
-    @GetMapping("read/{clientId}")
+    @GetMapping("/read/{clientId}")
     ResponseEntity<String> read(@PathVariable("clientId") int clientId) {
         return ResponseEntity.ok(mainServerService.readMessage(clientId));
     }
 
-    @GetMapping("read")
+    @GetMapping("/read")
     ResponseEntity<List<String>> read() {
-        return ResponseEntity.ok(mainServerService.readMessage());
+        List<String> messages = mainServerService.readMessage();
+        mainServerService.reSendMessage(messages);
+        return ResponseEntity.ok(messages);
     }
 
 }

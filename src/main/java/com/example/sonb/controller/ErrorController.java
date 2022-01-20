@@ -30,7 +30,7 @@ public class ErrorController {
         mainServerService.stopMainServer();
     }
 
-    @GetMapping("/code")
+    @GetMapping("/message")
     void runErrorWithCoding() {
         BergerService.setIsErrorCodeActive(true);
     }

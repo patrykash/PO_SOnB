@@ -58,12 +58,54 @@ function sendMessage(message) {
     send.onload = function () {
         console.log("wysylanie")
         getAnswers()
+        getClientsMessageStatus()
         /*if(send.status )
         {
             console.log(send.responseText) ;
 
         }*/
     };
+}
+
+function getClientsMessageStatus() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/server/read', true);
+    xhr.send(null);
+    xhr.onload = function () {
+        if (xhr.status === 200){
+            let messageStatus = JSON.parse(xhr.responseText)
+            console.log("messageStatus: " + messageStatus[0])
+            setMessageStatus(messageStatus)
+            if (isError(messageStatus)){
+                console.log("resedn");
+                reSendMessage(messageStatus)
+            }
+            console.log("getClientsMessageStatus")
+        }
+    };
+}
+function isError(messageStatus){
+    for (let i = 0; i < messageStatus.length; i++) {
+        console.log("isError")
+        console.log(messageStatus[i])
+        if (messageStatus[i] === "ERROR") {
+            return true;
+        }
+    }
+    return false;
+}
+function setMessageStatus(messageStatus) {
+    let messageStatusContent = ' ';
+    for (let i = 0; i < messageStatus.length; i++) {
+        if (messageStatus[i] === 'error') {
+            messageStatusContent = messageStatusContent + i + ', '
+        }
+
+    }
+    messageStatusContent = messageStatusContent.substring(0, messageStatusContent.length -1 )
+    let reMessage = document.getElementById('reMessage');
+    messageStatusContent = reMessage.textContent + messageStatusContent;
+    reMessage.textContent = messageStatusContent;
 }
 
 function getAnswers() {
@@ -87,6 +129,24 @@ function setAnswers(answers){
         console.log(answers[i].correct)
         setCorrectness(answers[i].correct, i)
     }
+}
+
+function getAnswer(clientId) {
+    let getQuestion = new XMLHttpRequest();
+    getQuestion.open('GET', '/client/read/'+clientId, true);
+    getQuestion.send(null);
+    getQuestion.onload = function () {
+        console.log(JSON.parse(getQuestion.responseText))
+        setAnswer(JSON.parse(getQuestion.responseText),clientId)
+        console.log("odboieranie wiadomosci")
+    };
+}
+
+function setAnswer(answer, clientId){
+    document.getElementById("client-message-"+ clientId).textContent = answer.message
+    document.getElementById("code-message-"+ clientId).textContent = answer.bergerCode
+    console.log(answer.correct)
+    setCorrectness(answer.correct, clientId)
 }
 
 function setCorrectness(isCorrect, clientId){
@@ -131,6 +191,17 @@ function runErrorWithCoding() {
     xhr.onload = function () {
         if (xhr.status === 200){
             console.log("/error/code")
+        }
+    };
+}
+
+function runErrorWithMessage() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/error/message', true);
+    xhr.send(null);
+    xhr.onload = function () {
+        if (xhr.status === 200){
+            console.log("/error/message")
         }
     };
 }
@@ -253,6 +324,44 @@ function createTemporaryMainServerBody(clientId){
     clearedClient.appendChild(tempButton)
 
 }
+
+function reSendMessage(messageStatus){
+    let test =document.getElementById('serverStatusMessage');
+    let test2 = 'Status wiadomości: ';
+    for (let i = 6; i > 0; i--) {
+        if (i === 6) {
+            sleep(1000 * i).then( () => reSend())
+        }else {
+            sleep(1000 * i).then( () => updateTime(6 - i))
+        }
+
+
+    }
+
+    async function updateTime(time){
+        test.textContent = test2 + 'Retransmiasja wiadomości za: ' + time + 'sekund'
+        console.log(time)
+    }
+
+    function reSend() {
+        for (let i = 0; i < messageStatus.length; i++) {
+            console.log("messageStatus.length " + messageStatus.length)
+            if (messageStatus[i] === "ERROR") {
+                if (serverId > -1 && serverId<= i){
+                    getAnswer(i+1)
+                }else {
+                    getAnswer(i);
+                }
+
+            }
+        }
+        test.textContent = test2 + 'Wiadomosc wysłana'
+    }
+
+}
+
+
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
