@@ -9,7 +9,6 @@ function init(){
     document.getElementById("clientError").addEventListener("click", runErrorWithClient)
     document.getElementById("serverFix").addEventListener("click", fixErrorWithServer)
     document.getElementById("clientFix").addEventListener("click", fixErrorWithClient)
-    document.getElementById("codeFix").addEventListener("click", fixErrorWithCoding)
     /*window.sessionStorage.setItem("userId", "1");
     window.addEventListener("resize", setHeight);*/
 }

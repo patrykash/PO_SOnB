@@ -112,3 +112,20 @@ h2{
     width: 40%;
     max-width: 90px;
 }
+
+.server-status{
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.server-status-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.server-status-message{
+    width: 33%;
+}

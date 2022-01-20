@@ -58,6 +58,7 @@ function sendMessage(message) {
     send.onload = function () {
         console.log("wysylanie")
         getAnswers()
+        setClientIdInServerStatus(getActiveClientsId())
         getClientsMessageStatus()
         /*if(send.status )
         {
@@ -65,6 +66,22 @@ function sendMessage(message) {
 
         }*/
     };
+}
+
+function getActiveClientsId() {
+    let clientsId = " ";
+    for (let i = 0; i < 7; i++) {
+        if (serverId !== i) {
+            clientsId = clientsId + i + ",";
+        }
+    }
+    return clientsId;
+}
+function setClientIdInServerStatus(clientsId) {
+    let serverSendMessageContent = document.getElementById('serverSendMessage');
+    serverSendMessageContent.textContent = "Wiadomość wysłana do :" + clientsId;
+
+
 }
 
 function getClientsMessageStatus() {
@@ -97,14 +114,14 @@ function isError(messageStatus){
 function setMessageStatus(messageStatus) {
     let messageStatusContent = ' ';
     for (let i = 0; i < messageStatus.length; i++) {
-        if (messageStatus[i] === 'error') {
+        if (messageStatus[i] === 'ERROR') {
             messageStatusContent = messageStatusContent + i + ', '
         }
 
     }
     messageStatusContent = messageStatusContent.substring(0, messageStatusContent.length -1 )
     let reMessage = document.getElementById('reMessage');
-    messageStatusContent = reMessage.textContent + messageStatusContent;
+    messageStatusContent ="Prosba o retransmisje wiadomośći dla:" + messageStatusContent;
     reMessage.textContent = messageStatusContent;
 }
 
