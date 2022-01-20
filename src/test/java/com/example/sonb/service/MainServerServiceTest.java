@@ -20,13 +20,13 @@ class MainServerServiceTest {
     final String INCORRECT_MESSAGE_IN_BINARY = "1111111111111111";
     final String CORRECT_MESSAGE_WITH_CODE = "010000010100001011011";
     //final String INCORRECT_MESSAGE_WITH_CODE = "010000010100001000100";
-    final String INCORRECT_MESSAGE_WITH_CODE = "111111111111111100100";
+    final String INCORRECT_MESSAGE_WITH_CODE = "111111111111111111011";
 
     MainServerService mainServerService = new MainServerService();
     MainServer mainServer = new MainServer(ServerPort.MAIN_S.getPortNumber());
 
     @Test
-    void shouldSendMessageWithCorrectCodeForEachClientsWhenErrorCodeIsNotActive() {
+    void shouldSendCorrectMessageWithCorrectCodeForEachClientsWhenErrorCodeIsNotActive() {
         mainServer.clients = createClients();
         mainServerService.setMainServer(mainServer);
         MockedStatic<BergerService> bergerService = Mockito.mockStatic(BergerService.class);
@@ -43,24 +43,6 @@ class MainServerServiceTest {
         bergerService.close();
     }
 
-    @Test
-    void shouldSendWrongMessageForEachClientsWhenErrorCodeIsNotActive() {
-        mainServer.clients = createClients();
-        mainServerService.setMainServer(mainServer);
-        MockedStatic<BergerService> bergerService = Mockito.mockStatic(BergerService.class);
-
-        bergerService.when(() -> BergerService.convertStringToBinary(MESSAGE)).thenReturn("0100000101000010");
-        bergerService.when(BergerService::isErrorCodeActive).thenReturn(true);
-        bergerService.when(() -> BergerService.createBergerCode(MESSAGE_IN_BINARY)).thenReturn("00100");
-        bergerService.when(() -> BergerService.convertToMessageWithError(MESSAGE_IN_BINARY)).thenReturn(INCORRECT_MESSAGE_IN_BINARY);
-
-        mainServerService.sendMessage(MESSAGE);
-
-        verify(mainServer.clients.get(0), times(1)).send(INCORRECT_MESSAGE_WITH_CODE);
-        verify(mainServer.clients.get(1), times(1)).send(INCORRECT_MESSAGE_WITH_CODE);
-        verify(mainServer.clients.get(2), times(1)).send(INCORRECT_MESSAGE_WITH_CODE);
-        bergerService.close();
-    }
 
     @Test
     void shouldReadMessageForEachClients(){
