@@ -59,8 +59,6 @@ public class BergerService {
         String messageContent = getMessageContentFromMessage(message);
         long numberOfOnesInMessageContent = countNumberOfOnes(messageContent);
         long decodedBergerCode = decodeBerger(bergerCode);
-        System.out.println("numberOfOnesInMessageContent" + numberOfOnesInMessageContent);
-        System.out.println("decodedBergerCode" + decodedBergerCode);
         return numberOfOnesInMessageContent == decodedBergerCode;
     }
 
@@ -72,7 +70,6 @@ public class BergerService {
         } else {
             incorrectMessageInBinary = messageInBinary.replaceAll("1", "0");
         }
-        System.out.println("message with error: " + incorrectMessageInBinary);
         return incorrectMessageInBinary;
     }
 }
